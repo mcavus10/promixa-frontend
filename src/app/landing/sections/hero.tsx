@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export function HeroSection() {
   return (
@@ -15,12 +16,14 @@ export function HeroSection() {
           Unlock your creative potential with Promixa&apos;s suite of AI tools. Generate stunning images, 
           transcribe audio, and more - all in one platform.
         </p>
-        <Button 
-          size="lg" 
-          className="rounded-full py-6 px-8 text-lg mb-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] shadow-md"
-        >
-          GET STARTED
-        </Button>
+        <Link href="/login">
+          <Button 
+            size="lg" 
+            className="rounded-full py-6 px-8 text-lg mb-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] shadow-md"
+          >
+            GET STARTED
+          </Button>
+        </Link>
       </div>
     </section>
   );
