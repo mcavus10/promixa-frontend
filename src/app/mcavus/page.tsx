@@ -39,7 +39,7 @@ export default function CVPage() {
                   <EmailIcon /> Email
                 </a>
                 <a 
-                  href="https://www.linkedin.com/in/muhammed-çavuş-b16919280/" 
+                  href="https://www.linkedin.com/in/muhammed-%C3%A7avu%C5%9F-b16919280/" 
                   target="_blank" 
                   className="flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-full transition-colors text-blue-700"
                 >
@@ -64,15 +64,15 @@ export default function CVPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-700 leading-relaxed">
-                Hi, I'm Muhammed Çavuş, a final-year Software Engineering student passionate about backend development, 
+                Hi, I&apos;m Muhammed Çavuş, a final-year Software Engineering student passionate about backend development, 
                 with a strong foundation in Java and the Spring Boot ecosystem.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                I specialize in building scalable and secure APIs, and I'm continuously improving my skills in 
+                I specialize in building scalable and secure APIs, and I&apos;m continuously improving my skills in 
                 database systems and cloud-native architectures.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                My experience includes working on e-commerce platforms and RESTful API design, and I'm currently 
+                My experience includes working on e-commerce platforms and RESTful API design, and I&apos;m currently 
                 focused on modern backend practices and professional development.
               </p>
             </div>
@@ -193,7 +193,7 @@ export default function CVPage() {
                   </div>
                   <h5 className="text-gray-600 font-medium mb-3">Ergineer Software - Remote</h5>
                   <p className="text-gray-600 mb-3">
-                    This was a remote internship where I worked with the intern team on the "Foogic"
+                    This was a remote internship where I worked with the intern team on the &quot;Foogic&quot;
                     project. As a Web Development Intern, I designed responsive web pages using HTML,
                     CSS, and JavaScript, and developed interactive features. By collaborating with the
                     team, I contributed to the completion of the project prototype, which helped me
@@ -211,7 +211,7 @@ export default function CVPage() {
               
               {/* Backend Development */}
               <div className="mb-10">
-                <h4 className="text-lg font-semibold text-gray-800 mb-4">Programing Language & Frameworks</h4>
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Programing Language &amp; Frameworks</h4>
                 <div className="flex flex-wrap gap-3">
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Java</span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Kotlin</span>
@@ -236,7 +236,7 @@ export default function CVPage() {
                 <h4 className="text-lg font-semibold text-gray-800 mb-4">Other Skills</h4>
                 <div className="flex flex-wrap gap-3">
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">RESTful APIs</span>
-                  <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Git & GitHub</span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Git &amp; GitHub</span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Postman</span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">AWS</span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium text-sm shadow-sm">Firebase</span>
