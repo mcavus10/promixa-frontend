@@ -1,9 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { ImageIcon, MicIcon, FileTextIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export function FeaturesSection() {
+  const router = useRouter();
+  
   const features = [
     {
       title: 'AI Art Generator',
@@ -11,7 +16,7 @@ export function FeaturesSection() {
       icon: <ImageIcon className="h-8 w-8 text-white" />,
       gradient: 'from-blue-500 to-purple-600',
       buttonText: 'Try Now →',
-      buttonLink: '/art',
+      buttonLink: '/image',
       comingSoon: false
     },
     {
@@ -28,7 +33,7 @@ export function FeaturesSection() {
       description: 'Generate professional-grade content with AI.',
       icon: <FileTextIcon className="h-8 w-8 text-white" />,
       gradient: 'from-orange-500 to-red-600',
-      buttonText: 'Notify Me',
+      buttonText: 'Coming Soon...',
       buttonLink: '#',
       comingSoon: true
     },
@@ -48,11 +53,14 @@ export function FeaturesSection() {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="group transition-all duration-300 transform hover:translate-y-[-8px]" 
+              className={`group transition-all duration-300 transform hover:translate-y-[-8px] ${feature.comingSoon ? 'opacity-70' : ''}`} 
               data-aos="fade-up" 
               data-aos-delay={index * 100}
             >
-              <Card className="h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-0 flex flex-col">
+              <Card 
+                className={`h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-0 flex flex-col ${feature.comingSoon ? '' : 'cursor-pointer'}`}
+                onClick={() => !feature.comingSoon && router.push(feature.buttonLink)}
+              >
                 <div className={`bg-gradient-to-r ${feature.gradient} p-6`}>
                   <div className="bg-white/20 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                     {feature.icon}
@@ -78,9 +86,9 @@ export function FeaturesSection() {
                   ) : (
                     <Button 
                       className={`w-full rounded-xl bg-gradient-to-r ${feature.gradient} text-white hover:opacity-90`}
-                      asChild
+                      onClick={() => router.push(feature.buttonLink)}
                     >
-                      <Link href={feature.buttonLink}>{feature.buttonText}</Link>
+                      {feature.buttonText}
                     </Button>
                   )}
                 </CardFooter>
