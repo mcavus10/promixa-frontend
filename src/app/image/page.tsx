@@ -28,7 +28,7 @@ export default function ImageGenerationPage() {
   };
 
   // Mock image transformation function
-  const transformImage = (prompt: string, imageFile: File | null) => {
+  const transformImage = (prompt: string, _imageFile: File | null) => {
     setIsGenerating(true);
     
     // Simulate API call with timeout
