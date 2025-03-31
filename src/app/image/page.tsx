@@ -28,7 +28,7 @@ export default function ImageGenerationPage() {
   };
 
   // Mock image transformation function
-  const transformImage = (prompt: string, _imageFile: File | null) => {
+  const transformImage = (prompt: string) => {
     setIsGenerating(true);
     
     // Simulate API call with timeout
@@ -51,7 +51,7 @@ export default function ImageGenerationPage() {
 
   // Handle upload-based generation
   const handleUploadGenerate = (prompt: string, imageFile: File | null) => {
-    transformImage(prompt, imageFile);
+    transformImage(prompt);
   };
 
   return (
