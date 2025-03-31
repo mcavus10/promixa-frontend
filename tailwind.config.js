@@ -19,10 +19,22 @@ module.exports = {
           '0%': { opacity: '1', transform: 'translateY(0)' },
           '100%': { opacity: '0', transform: 'translateY(10px)' },
         },
+        gradientBorder: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.3s ease-in-out forwards',
         fadeOut: 'fadeOut 0.15s ease-in-out forwards',
+        'gradient-border': 'gradientBorder 2s ease-in-out infinite',
+      },
+      transitionDelay: {
+        '100': '100ms',
+        '200': '200ms',
+        '300': '300ms',
+        '400': '400ms',
+        '500': '500ms',
       },
     },
   },

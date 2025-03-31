@@ -25,8 +25,8 @@ export default function LoginPage() {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // For demonstration, just redirect to home after "login"
-      router.push('/image');
+      // Redirect to dashboard after login
+      router.push('/dashboard');
     }, 1500);
   };
 
@@ -36,8 +36,8 @@ export default function LoginPage() {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // For demonstration, just redirect to home after "login"
-      router.push('/image');
+      // Redirect to dashboard after login
+      router.push('/dashboard');
     }, 1500);
   };
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col items-center justify-center p-4 pb-16">
       <Link href="/" className="absolute top-8 left-8 text-xl font-bold text-primary flex items-center">
         <div className="relative w-6 h-6 mr-2">
           <Image src="/favicon.ico" alt="Promixa Logo" width={24} height={24} className="object-contain" />
@@ -70,8 +70,8 @@ export default function LoginPage() {
         Promixa
       </Link>
       
-      <div className="w-full max-w-md">
-        <div className="bg-white shadow-xl rounded-2xl overflow-hidden mb-10">
+      <div className="w-full max-w-md mb-16">
+        <div className="bg-white shadow-xl rounded-2xl">
           {/* Tab navigation */}
           <div className="flex border-b border-gray-200">
             <button
@@ -269,7 +269,7 @@ export default function LoginPage() {
                   </Button>
                 </form>
                 
-                <div className="mt-4 md:mt-6">
+                <div className="mt-4 md:mt-6 mb-4">
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-gray-300"></div>
