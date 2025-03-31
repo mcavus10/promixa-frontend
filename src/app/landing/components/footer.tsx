@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -13,14 +13,8 @@ export function Footer() {
               transcription, and more.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://github.com" target="_blank" className="hover:text-white transition-colors">
+              <Link href="https://github.com/mcavus10/promixa-frontend" target="_blank" className="hover:text-white transition-colors">
                 <Github className="h-5 w-5" />
-              </Link>
-              <Link href="https://linkedin.com" target="_blank" className="hover:text-white transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link href="https://x.com" target="_blank" className="hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -28,18 +22,15 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-white mb-4">Products</h4>
             <ul className="space-y-2">
-              <li><Link href="#" className="hover:text-white transition-colors">Image Generator</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Transcription Tool</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Coming Soon</Link></li>
+              <li><Link href="/image" className="hover:text-white transition-colors">Image Generator</Link></li>
+              <li><Link href="/transcribe" className="hover:text-white transition-colors">Transcription Tool</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-bold text-white mb-4">Company</h4>
             <ul className="space-y-2">
-              <li><Link href="#" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Blog</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
+              <li><Link href="https://mcavus.promixa.me" target="_blank" className="hover:text-white transition-colors">About Dev</Link></li>
               <li><Link href="#contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>
