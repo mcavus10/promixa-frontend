@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { ImageIcon, MicIcon, FileTextIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
