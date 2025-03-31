@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import Image from 'next/image';
 
 interface ImageUploadFormProps {
-  onGenerate: (prompt: string, imageFile: File | null) => void;
+  onGenerate: (prompt: string) => void;
   isGenerating: boolean;
 }
 
@@ -46,7 +46,7 @@ export default function ImageUploadForm({ onGenerate, isGenerating }: ImageUploa
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (prompt.trim() && !isGenerating && imageFile) {
-      onGenerate(prompt, imageFile);
+      onGenerate(prompt);
     }
   };
 

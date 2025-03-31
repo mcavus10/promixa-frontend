@@ -50,7 +50,7 @@ export default function ImageGenerationPage() {
   };
 
   // Handle upload-based generation
-  const handleUploadGenerate = (prompt: string, imageFile: File | null) => {
+  const handleUploadGenerate = (prompt: string) => {
     transformImage(prompt);
   };
 
