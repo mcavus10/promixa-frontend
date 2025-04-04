@@ -71,7 +71,7 @@ export default function LanguageSelector({ onLanguageChange }: LanguageSelectorP
     { code: 'th', name: 'Thai' },
   ];
 
-  // Update filtered languages whenever search term changes
+  // Filter languages based on search term
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredLanguages(allLanguages);
@@ -86,12 +86,12 @@ export default function LanguageSelector({ onLanguageChange }: LanguageSelectorP
     });
     
     setFilteredLanguages(filtered);
-  }, [searchTerm]);
+  }, [searchTerm, allLanguages]);
   
   // Initialize filtered languages with all languages
   useEffect(() => {
     setFilteredLanguages(allLanguages);
-  }, []);
+  }, [allLanguages]);
 
   const handleLanguageSelect = (language: Language) => {
     setSelectedLanguage(language);

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Construction, Sparkles } from 'lucide-react';
 import Link from 'next/link';
@@ -32,7 +31,7 @@ export default function ImageGenerationPlaceholder() {
         </div>
         
         <p className="text-lg text-gray-600 mb-8 mx-auto max-w-2xl">
-          We're working hard to bring you an amazing AI image generation experience. This feature will allow you to create stunning visuals from simple text prompts using powerful diffusion models.
+          We&apos;re working hard to bring you an amazing AI image generation experience. This feature will allow you to create stunning visuals from simple text prompts using powerful diffusion models.
         </p>
         
         <div className="space-y-4">

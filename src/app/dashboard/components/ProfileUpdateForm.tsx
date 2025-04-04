@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/card';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
 export function ProfileUpdateForm() {
-  const { user, setAuthData, refreshUserData } = useAuth();
+  const { user, refreshUserData } = useAuth();
   
   // Name update state
   const [isEditingName, setIsEditingName] = useState(false);

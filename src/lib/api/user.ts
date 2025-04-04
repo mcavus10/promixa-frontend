@@ -37,7 +37,7 @@ export async function fetchCurrentUser(): Promise<AuthResponse> {
 /**
  * Update user name
  */
-export async function updateUserName(newName: string): Promise<any> {
+export async function updateUserName(newName: string): Promise<{ success: boolean; message?: string }> {
   const token = getAuthToken();
   if (!token) throw new Error('Not authenticated');
   
@@ -66,7 +66,7 @@ export interface PasswordUpdateRequest {
   newPassword: string;
 }
 
-export async function updateUserPassword(data: PasswordUpdateRequest): Promise<any> {
+export async function updateUserPassword(data: PasswordUpdateRequest): Promise<{ success: boolean; message?: string }> {
   const token = getAuthToken();
   if (!token) throw new Error('Not authenticated');
   

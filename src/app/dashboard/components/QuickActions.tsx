@@ -7,7 +7,7 @@ import { useAuth } from '@/lib/contexts/AuthContext';
 
 export function QuickActions() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { logout, isAuthenticated } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
 
   const handleLogout = () => {

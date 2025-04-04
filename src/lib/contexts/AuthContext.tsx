@@ -4,8 +4,6 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback 
 import { 
   AuthResponse, 
   getAuthToken, 
-  getUserData, 
-  isAuthenticated as checkAuth,
   removeAuthToken,
   removeUserData,
   storeUserData
@@ -35,6 +33,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<Partial<AuthResponse> | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Logout function - for use elsewhere
+  const logout = useCallback(() => {
+    console.log('Logging out user');
+    removeAuthToken();
+    removeUserData();
+    setIsAuthenticated(false);
+    setUser(null);
+  }, []);
 
   // User data refresh function - wrapped with useCallback for reference stability
   const refreshUserData = useCallback(async (): Promise<void> => {
@@ -80,28 +87,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.log('FINAL Trial status set to:', 
                    userData.isTrialActive ? 'Active' : 'Expired');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to refresh user data:', error);
       
       // In case of 401 error (authentication issues), log out
-      if (error.message === 'Authentication expired' || 
-          error.message?.includes('Unauthorized') || 
-          error.status === 401) {
+      if (error instanceof Error) {
+        if (error.message === 'Authentication expired' || 
+            error.message?.includes('Unauthorized')) {
+          console.warn('Authentication error. Logging out user.');
+          logout();
+        }
+      } else if (typeof error === 'object' && error !== null && 'status' in error && (error as {status?: number}).status === 401) {
         console.warn('Authentication error. Logging out user.');
         logout();
       }
       throw error; // Rethrow the error so the calling function can catch it
     }
-  }, []); // Empty dependency array - for reference stability
-
-  // Logout function - for use elsewhere
-  const logout = useCallback(() => {
-    console.log('Logging out user');
-    removeAuthToken();
-    removeUserData();
-    setIsAuthenticated(false);
-    setUser(null);
-  }, []);
+  }, [logout]); // Add logout to the dependency array for proper React hooks usage
 
   // User data update function
   const setAuthData = useCallback((data: AuthResponse) => {
@@ -149,7 +151,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
 
     initializeAuth();
-  }, []); // Empty dependency array - runs only once
+  }, [refreshUserData, logout]); // Add dependencies needed by the effect
 
   // Context provider value
   const value = {

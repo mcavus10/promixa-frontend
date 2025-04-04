@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import withAuth from '@/lib/auth/withAuth';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { WelcomeHeader } from './components/WelcomeHeader';
@@ -12,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { FileAudio, Zap } from 'lucide-react';
 
 function DashboardPage() {
-  const { user, isAuthenticated, loading, refreshUserData } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
 
   // Dashboard'a her girişte refreshUserData çağrısı kaldırıldı
   // useEffect(() => {

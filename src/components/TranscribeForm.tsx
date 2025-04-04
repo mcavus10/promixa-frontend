@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import axios, { AxiosError } from 'axios';
 import AudioUpload from './AudioUpload';
 import LanguageSelector from './LanguageSelector';
@@ -172,7 +172,7 @@ export default function TranscribeForm({ activeTab }: TranscribeFormProps) {
         } else {
           // General error message for other errors
           const errorMessage = axiosError.response?.data && typeof axiosError.response.data === 'object' 
-            ? (axiosError.response.data as any).message || 'Unknown error' 
+            ? (axiosError.response.data as { message?: string }).message || 'Unknown error' 
             : axiosError.message || 'Unknown error';
           
           setError(`Transcription failed: ${errorMessage}`);
@@ -188,7 +188,7 @@ export default function TranscribeForm({ activeTab }: TranscribeFormProps) {
     } finally {
       setIsTranscribing(false);
     }
-  }, [activeTab, audioFile, videoFile, language, isAuthenticated, loading, canTranscribe, getCurrentFile, redirectToLogin]);
+  }, [language, isAuthenticated, loading, canTranscribe, getCurrentFile, redirectToLogin]);
 
   const handleDownload = useCallback(() => {
     if (!transcriptionResult) return;

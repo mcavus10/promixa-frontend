@@ -8,8 +8,8 @@ import { useAuth } from '../contexts/AuthContext';
  * Higher-Order Component that protects routes requiring authentication
  * Redirects to login page if user is not authenticated
  */
-export default function withAuth(Component: React.ComponentType<any>) {
-  return function AuthenticatedComponent(props: any) {
+export default function withAuth<P extends object>(Component: React.ComponentType<P>) {
+  return function AuthenticatedComponent(props: P) {
     const { isAuthenticated, loading } = useAuth();
     const router = useRouter();
     
