@@ -2,9 +2,18 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/contexts/AuthContext';
 
 export function QuickActions() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { logout, isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-md p-5 animate-fadeIn animation-delay-300">
@@ -53,8 +62,8 @@ export function QuickActions() {
           <span className="text-sm font-medium text-gray-600">Settings</span>
         </Link>
         
-        <Link 
-          href="/login"
+        <button 
+          onClick={handleLogout}
           className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200"
         >
           <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mb-2">
@@ -63,7 +72,7 @@ export function QuickActions() {
             </svg>
           </div>
           <span className="text-sm font-medium text-gray-600">Logout</span>
-        </Link>
+        </button>
       </div>
     </div>
   );

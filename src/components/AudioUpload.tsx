@@ -1,17 +1,25 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface AudioUploadProps {
   fileType: 'audio' | 'video';
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: File | null) => void;
+  currentFile: File | null; 
 }
 
-export default function AudioUpload({ fileType, onFileSelect }: AudioUploadProps) {
+export default function AudioUpload({ fileType, onFileSelect, currentFile }: AudioUploadProps) {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (currentFile) {
+      setFile(currentFile);
+      setFileName(currentFile.name);
+    }
+  }, [currentFile]);
 
   const acceptedTypes = {
     audio: '.mp3,.wav,.m4a,.aac,.ogg,audio/*',
@@ -49,7 +57,6 @@ export default function AudioUpload({ fileType, onFileSelect }: AudioUploadProps
   };
 
   const processFile = (file: File) => {
-    // Check if the file type is valid
     if (
       (fileType === 'audio' && file.type.startsWith('audio/')) ||
       (fileType === 'video' && file.type.startsWith('video/'))
@@ -71,6 +78,7 @@ export default function AudioUpload({ fileType, onFileSelect }: AudioUploadProps
   const clearFile = () => {
     setFile(null);
     setFileName('');
+    onFileSelect(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }

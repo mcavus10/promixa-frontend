@@ -14,9 +14,10 @@ export function FeaturesSection() {
       description: 'Create stunning visuals from simple text prompts using powerful diffusion models.',
       icon: <ImageIcon className="h-8 w-8 text-white" />,
       gradient: 'from-blue-500 to-purple-600',
-      buttonText: 'Try Now →',
+      buttonText: 'Coming Soon →',
       buttonLink: '/image',
-      comingSoon: false
+      comingSoon: true,
+      isDisabled: true
     },
     {
       title: 'Transcription Tool',

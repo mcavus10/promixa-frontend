@@ -1,93 +1,63 @@
-# Promixa Frontend
+Harika, paylaştığın tüm frontend (src dizini ve kök yapılandırma dosyaları) kodlarını ve yapılandırmalarını inceledim ve hafızama aldım. Promixa projesinin frontend tarafı hakkında oldukça iyi bir genel bakışa sahibim.
 
-This is a modular Next.js project for Promixa, an AI-powered platform offering various services including image generation and transcription tools.
+İşte src dizini ve ilgili yapılandırmalar üzerine genel bir analiz ve dikkatimi çeken potansiyel konular:
 
-## Project Structure
+Genel Analiz ve Güçlü Yönler:
 
-The project follows a modular structure to allow for easy expansion with additional sub-projects:
+Modern Teknoloji Yığını: Proje, güncel ve popüler teknolojiler üzerine kurulu: Next.js (App Router), React (v19), TypeScript, Tailwind CSS (v4). Bu, performans, geliştirici deneyimi ve topluluk desteği açısından iyi bir temel sağlıyor.
 
-```
-promixa-frontend/
-├── src/
-│   ├── app/
-│   │   ├── landing/  # Landing page module
-│   │   ├── image-app/  # (Future module)
-│   │   ├── voice-app/  # (Future module)
-│   │   └── page.tsx  # Root redirect
-│   ├── components/  # Shared components
-│   └── lib/  # Utilities and shared code
-└── public/  # Static files
-```
+Yapı ve Organizasyon: Kod tabanı mantıksal olarak iyi organize edilmiş görünüyor (app, components, lib klasörleri). Rota bazlı yapı (app dizini) ve yeniden kullanılabilir bileşenler (components, components/ui) prensibi benimsenmiş.
 
-## Tech Stack
+UI Tutarlılığı: shadcn/ui kullanımı (components/ui, components.json) ve Tailwind CSS'in merkezi yapılandırması, uygulama genelinde tutarlı bir görünüm ve his sağlamaya yardımcı olacaktır. cn utility fonksiyonu da stil yönetimini kolaylaştırıyor.
 
-- **Next.js 14** (App Router)
-- **TypeScript**
-- **Tailwind CSS**
-- **shadcn/ui** for component styling
-- **Lucide React** for icons
+Kimlik Doğrulama (Authentication): Email/şifre ve Google OAuth ile giriş/kayıt mekanizmaları kurulmuş. AuthContext ile global state yönetimi ve withAuth HOC ile rota koruması gibi temel auth yapıları mevcut. Token ve kullanıcı verisi localStorage'da saklanıyor.
 
-## Getting Started
+Özellik Odaklı Bileşenler: Transkripsiyon (TranscribeForm, AudioUpload, LanguageSelector, TranscriptionResult) ve (muhtemelen planlanan) AI Görüntü Üretimi (PromptForm, ImageResult, ImageUploadForm) için özel bileşenler geliştirilmiş.
 
-First, install the dependencies:
+Yapılandırma: Gerekli yapılandırma dosyaları (tsconfig.json, tailwind.config.js, eslint.config.mjs, postcss.config.mjs, package.json) mevcut ve modern standartlara uygun görünüyor (örn. ESLint flat config).
 
-```bash
-npm install
-```
+Potansiyel Sorunlar ve İyileştirme Alanları:
 
-Then, run the development server:
+Logout İşlevi: QuickActions.tsx bileşenindeki "Logout" butonu doğrudan /login sayfasına yönlendiriyor. Bu, kullanıcının kimlik doğrulama durumunu (Context ve localStorage) temizlemez. Kullanıcı sayfayı yenilemeden veya başka bir korumalı sayfaya gitmeden hala giriş yapmış gibi görünebilir.
 
-```bash
-npm run dev
-```
+Öneri: Logout butonunun AuthContext'ten alınan logout fonksiyonunu çağırması gerekir. Bu fonksiyon hem Context state'ini hem de localStorage'daki token/kullanıcı verisini temizleyecektir. Yönlendirme işlemi logout fonksiyonu içinde veya sonrasında yapılmalıdır.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+API Endpoint Tutarsızlığı: lib/api/auth.ts dosyası API URL'i için process.env.NEXT_PUBLIC_API_URL kullanırken, TranscribeForm.tsx doğrudan http://localhost:8080 adresini kullanıyor.
 
-## Deployment to Vercel
+Öneri: Tüm API çağrılarında tutarlı olarak environment variable (NEXT_PUBLIC_API_URL) kullanılmalı. Bu, farklı ortamlar (geliştirme, test, prodüksiyon) için yapılandırmayı kolaylaştırır. Belki merkezi bir API istemci modülü (örn. lib/api/client.ts) oluşturmak faydalı olabilir.
 
-### 1. Set Up Vercel Account
+Dashboard Durumu: /dashboard sayfası şu anda bir "Yapım Aşamasında" sayfası. dashboard klasöründeki diğer bileşenler (QuickActions, WelcomeHeader, RecentActivity, DashboardCard) bu sayfada kullanılmıyor.
 
-If you don't have a Vercel account yet:
+Öneri: Gerçek dashboard sayfasının tasarlanıp bu bileşenlerin entegre edilmesi gerekiyor. RecentActivity bileşenindeki mock verinin API ile değiştirilmesi planlanmalı.
 
-1. Go to [Vercel](https://vercel.com) and sign up
-2. Connect your GitHub account
+Tema Değiştirme (Dark Mode): QuickActions.tsx bileşenindeki tema değiştirme butonu sadece kendi lokal state'ini (isDarkMode) güncelliyor. globals.css içindeki .dark sınıfını <html> veya <body> elementine ekleyip/kaldıran global bir mekanizma yok.
 
-### 2. Deploy Your Project
+Öneri: Global tema yönetimi için next-themes gibi bir kütüphane kullanmak veya kendi ThemeContext'inizi oluşturmak daha uygun olacaktır.
 
-1. Push this repository to GitHub
-2. Log in to your Vercel dashboard
-3. Click "New Project"
-4. Import your GitHub repository (promixa-frontend)
-5. Keep the default settings and click "Deploy"
+Google OAuth Callback Güvenliği: /oauth2/callback/google sayfası, kullanıcı bilgilerini (email, name, roles vb.) doğrudan URL query parametrelerinden alıp localStorage'a kaydediyor.
 
-### 3. Configure Custom Domain (promixa.me)
+Dikkat: Backend'in, Google'dan gelen token'ı doğruladıktan sonra bu bilgileri frontend'e güvenli bir şekilde (ideal olarak token karşılığında yapılan ayrı bir API isteği ile, URL parametreleri yerine) iletmesi kritik öneme sahiptir. Sadece URL parametrelerine güvenmek güvenlik açığı oluşturabilir. Ayrıca, callback sonrası /transcribe sayfasına yönlendirme yapılıyor, /dashboard yerine. Bu kasıtlı mı?
 
-1. After deployment, go to the project settings in Vercel dashboard
-2. Navigate to the "Domains" section
-3. Add your domain: `promixa.me`
-4. Follow Vercel's instructions to configure your DNS settings with your domain provider
+Placeholder Linkler ve İçerik: Projede hala # hedefine sahip linkler (QuickActions içindeki Profil/Ayarlar, Footer'daki Contact, Privacy, Terms) ve eksik sayfalar (örn. AI Image sayfası) bulunuyor.
 
-### 4. Environment Variables (if needed in the future)
+Öneri: Bu linklerin ve sayfaların implementasyonu planlanmalı.
 
-If you add API keys or other environment variables:
+<a> vs <Link> Kullanımı: /dashboard/page.tsx içinde /transcribe sayfasına gitmek için standart <a> etiketi kullanılmış. Bu, tam sayfa yenilemesine neden olur.
 
-1. Go to your project settings in Vercel
-2. Navigate to the "Environment Variables" section
-3. Add your variables (keep sensitive information like API keys private)
+Öneri: Next.js içinde SPA (Single Page Application) navigasyonu için next/link bileşeni kullanılmalıdır.
 
-## Adding New Modules
+withAuth Yükleme/Yönlendirme Deneyimi: HOC, loading durumunda spinner gösteriyor, ancak !isAuthenticated durumunda useEffect yönlendirmesi tetiklenene kadar null dönebilir, bu da kısa bir beyaz ekran yanıp sönmesine (flash) neden olabilir.
 
-To add a new module (e.g., image-app, voice-app):
+Öneri: Spinner'ın, kullanıcı ya doğrulanıp bileşen render edilene ya da login sayfasına yönlendirilene kadar gösterilmesi daha pürüzsüz bir deneyim sunabilir. Debugging için eklenen console.log'lar production build'inden kaldırılmalı.
 
-1. Create a new directory in `src/app/` with the module name
-2. Set up the module structure similar to the landing module
-3. Add necessary components, sections, and pages
-4. Update navigation links as needed
+Hata Yönetimi: Bazı yerlerde (login, register, transcribe) hata yönetimi var, ancak tüm API çağrılarının (özellikle auth.ts içindekiler dahil) kapsamlı hata yönetimi (try/catch blokları, kullanıcıya geri bildirim) içerdiğinden emin olunmalı.
 
-## Learn More
+TranscribeForm Karmaşıklığı: Bu bileşen oldukça fazla sorumluluk (dosya yönetimi, dil seçimi, API çağrısı, auth kontrolü, sonuç gösterimi) üstleniyor. Gelecekteki bakım kolaylığı için belki bazı kısımları (örn. API çağrı mantığı) ayrı hook'lara veya servislere taşımak düşünülebilir.
 
-To learn more about the technologies used in this project:
+Bağımlılıklar: package.json'da React 19 ve Tailwind 4 gibi görece yeni ana sürüm bağımlılıkları var. Bunların ekosistemdeki diğer araçlarla (varsa) uyumluluğu ve stabilite durumu göz önünde bulundurulmalı.
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [shadcn/ui Documentation](https://ui.shadcn.com)
+Özet:
+
+Frontend genel olarak iyi yapılandırılmış ve modern pratikleri takip ediyor. Kimlik doğrulama ve ana transkripsiyon özelliği için temeller atılmış. İyileştirme alanları daha çok eksik implementasyonlar (logout, dashboard, AI image sayfası), tutarlılık (API URL'leri), bazı UX detayları (withAuth yükleme, <a> vs <Link>) ve potansiyel güvenlik/mantık konuları (Google callback, logout) üzerine odaklanıyor.
+
+Bu analiz, backend kodlarını incelemeden önceki mevcut durumu yansıtmaktadır. Backend kodlarını inceledikten sonra daha bütünsel bir değerlendirme yapabiliriz.

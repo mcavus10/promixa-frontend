@@ -1,8 +1,31 @@
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export function PricingSection() {
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleProPlanClick = () => {
+    setMessage('Paid plans coming soon! You can start with the free trial for now.');
+    setShowMessage(true);
+    
+    // Close the message after 3 seconds
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 3000);
+  };
+
+  const handleEnterprisePlanClick = () => {
+    // Smooth scroll to contact section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const pricingPlans = [
     {
       name: 'Free',
@@ -15,7 +38,8 @@ export function PricingSection() {
         'Email support'
       ],
       cta: 'Get Started',
-      popular: false
+      popular: false,
+      comingSoon: false
     },
     {
       name: 'Pro',
@@ -29,7 +53,8 @@ export function PricingSection() {
         'Priority email support'
       ],
       cta: 'Try Pro',
-      popular: true
+      popular: true,
+      comingSoon: true
     },
     {
       name: 'Enterprise',
@@ -44,7 +69,8 @@ export function PricingSection() {
         'Dedicated support'
       ],
       cta: 'Contact Sales',
-      popular: false
+      popular: false,
+      comingSoon: true
     }
   ];
 
@@ -58,12 +84,23 @@ export function PricingSection() {
           </p>
         </div>
 
+        {showMessage && (
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 text-center max-w-md">
+            {message}
+          </div>
+        )}
+
         <div className="grid md:grid-cols-3 gap-8">
           {pricingPlans.map((plan, index) => (
             <Card key={index} className={`${plan.popular ? 'border-primary shadow-lg' : 'border'} relative`}>
               {plan.popular && (
                 <div className="absolute top-0 right-0 -translate-y-1/2 bg-primary text-white px-3 py-1 text-xs font-bold rounded-full">
                   POPULAR
+                </div>
+              )}
+              {plan.comingSoon && (
+                <div className="absolute top-0 left-0 -translate-y-1/2 bg-amber-500 text-white px-3 py-1 text-xs font-bold rounded-full">
+                  COMING SOON
                 </div>
               )}
               <CardHeader>
@@ -85,9 +122,29 @@ export function PricingSection() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button variant={plan.popular ? 'default' : 'outline'} className="w-full">
-                  {plan.cta}
-                </Button>
+                {index === 0 ? (
+                  <Link href="/login" className="w-full">
+                    <Button className="w-full">
+                      {plan.cta}
+                    </Button>
+                  </Link>
+                ) : index === 1 ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-opacity-70" 
+                    onClick={handleProPlanClick}
+                  >
+                    {plan.cta}
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-opacity-70" 
+                    onClick={handleEnterprisePlanClick}
+                  >
+                    {plan.cta}
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}
